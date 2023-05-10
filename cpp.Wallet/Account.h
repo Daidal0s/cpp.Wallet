@@ -14,8 +14,8 @@ private:
 	class impl;
 	std::unique_ptr<impl> pimpl;
 public:
-	Account(std::string name = "test", Wallet wallet = Wallet::DOLLAR, int64_t value = 0);
-	~Account();
+	Account(const std::string &name, Wallet wallet = Wallet::DOLLAR, int64_t value = 0);
+	virtual ~Account();
 public:
 	void setName(std::string name);
 	std::string getName();

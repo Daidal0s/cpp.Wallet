@@ -5,22 +5,22 @@ class Account::impl
 {
 private:
 	static int32_t m_accountId;
-	int32_t m_currnetId;
+	int32_t m_currentId;
 	std::string m_name = "test";
 	Wallet m_wallet = Wallet::DOLLAR;
 	int64_t m_value = 0;
 public:
-	impl(std::string name, Wallet wallet, int64_t value) :
+	impl(const std::string &name, Wallet wallet, int64_t value) :
 		m_name(name), m_wallet(wallet), m_value(value)
 	{
-		m_currnetId = ++m_accountId;
+		m_currentId = ++m_accountId;
 	}
 	~impl()	{ }
 public:
 	void setName(std::string name) { m_name = name; }
 	std::string getName() { return m_name; }
 
-	int32_t getAccountId() { return m_currnetId; }
+	int32_t getAccountId() { return m_currentId; }
 	Wallet getWallet() { return m_wallet; }
 	int64_t getValue() { return m_value; }
 
@@ -30,7 +30,7 @@ public:
 
 int32_t Account::impl::m_accountId = 0;
 
-Account::Account(std::string name, Wallet wallet, int64_t value) :
+Account::Account(const std::string &name, Wallet wallet, int64_t value) :
 	pimpl(std::make_unique<impl>(name, wallet, value))
 { }
 

@@ -12,5 +12,7 @@
 #include <memory>
 #include <string>
 #include <cstdint>
+#include <vector>
+#include <list>
 
 #endif //PCH_H
