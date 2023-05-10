@@ -31,3 +31,6 @@
 *.out
 *.app
 /.vs/cpp.Wallet
+/cpp.Wallet/x64/Debug
+/cpp.Wallet/x64/Release
+/testConsole/x64
