@@ -6,6 +6,7 @@ class Time::impl
 private:
 	stTime m_time;
 public:
+	impl() { }
 	~impl() { }
 public:
 	void setTime(int hours, int minutes, int seconds) 
@@ -59,12 +60,20 @@ std::string Time::stringTime() const { return pimpl->stringTime(); }
 
 
 
-
-class Bill::impl
+class Bills::Bill::impl
 {
 private:
-
+	
 public:
+
 public:
 };
 
+class Bills::BillList::impl
+{
+private:
+	int32_t m_walletId;
+	std::list<Bill*> m_billList;
+public:
+public:
+};

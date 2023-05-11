@@ -18,7 +18,7 @@ private:
 	std::unique_ptr<impl> pimpl;
 public:
 	Time();
-	~Time();
+	virtual ~Time();
 public:
 	void setTime(int hours, int minutes, int seconds);
 	void setDate(int day, int month, int year);
@@ -28,12 +28,42 @@ public:
 	std::string stringTime() const;
 };
 
-class MYDLL_API Bill
+namespace Bills
 {
-private:
-	class impl;
-	std::unique_ptr<impl> pimpl;
-public:
-public:
-};
+	enum class eOperationType : int8_t
+	{
+		INREASE = 0,
+		DECREASE
+	};
 
+	class MYDLL_API Bill
+	{
+	private:
+		class impl;
+		std::unique_ptr<impl> pimpl;
+	public:
+		Bill();
+		virtual ~Bill();
+	public:
+		Bill(const Bill& other);
+		Bill& Bill::operator=(const Bill& rhs);
+		Bill(Bill&& other) noexcept;
+		Bill& Bill::operator=(Bill&& rhs) noexcept;
+	protected:
+		std::string billString();
+	};
+
+	class MYDLL_API BillList
+	{
+	private:
+		class impl;
+		std::unique_ptr<impl> pimpl;
+	public:
+		BillList(int32_t walletId);
+		virtual ~BillList();
+	public:
+		void addBill(Bill& bill);
+		void removeBill(Bill& bill);
+		std::list<Bill> getBillList();
+	};
+}
