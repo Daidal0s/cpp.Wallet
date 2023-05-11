@@ -27,6 +27,9 @@
     <ClInclude Include="EventSytem.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="Bill.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -39,6 +42,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="EventSytemImpl.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="BillImpl.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
