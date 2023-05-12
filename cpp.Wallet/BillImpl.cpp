@@ -58,6 +58,7 @@ std::string Time::stringDate() const { return pimpl->stringDate(); }
 std::string Time::stringTime() const { return pimpl->stringTime(); }
 
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 class Bills::Bill::impl
@@ -75,5 +76,7 @@ private:
 	int32_t m_walletId;
 	std::list<Bill*> m_billList;
 public:
+
 public:
+
 };

@@ -34,8 +34,7 @@ Account::Account(const std::string &name, Wallet wallet, int64_t value) :
 	pimpl(std::make_unique<impl>(name, wallet, value))
 { }
 
-Account::~Account() 
-{ }
+Account::~Account() {  }
 
 void Account::setName(std::string name) { pimpl->setName(name); }
 std::string Account::getName() { return pimpl->getName(); }

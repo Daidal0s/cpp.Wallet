@@ -18,7 +18,7 @@ private:
 	std::unique_ptr<impl> pimpl;
 public:
 	Time();
-	virtual ~Time();
+	~Time();
 public:
 	void setTime(int hours, int minutes, int seconds);
 	void setDate(int day, int month, int year);
@@ -43,12 +43,12 @@ namespace Bills
 		std::unique_ptr<impl> pimpl;
 	public:
 		Bill();
-		virtual ~Bill();
+		~Bill();
 	public:
 		Bill(const Bill& other);
-		Bill& Bill::operator=(const Bill& rhs);
+		Bill& operator=(const Bill& rhs);
 		Bill(Bill&& other) noexcept;
-		Bill& Bill::operator=(Bill&& rhs) noexcept;
+		Bill& operator=(Bill&& rhs) noexcept;
 	protected:
 		std::string billString();
 	};
@@ -60,10 +60,10 @@ namespace Bills
 		std::unique_ptr<impl> pimpl;
 	public:
 		BillList(int32_t walletId);
-		virtual ~BillList();
+		~BillList();
 	public:
 		void addBill(Bill& bill);
 		void removeBill(Bill& bill);
-		std::list<Bill> getBillList();
+		std::list<Bill> getBillList() const;
 	};
 }
