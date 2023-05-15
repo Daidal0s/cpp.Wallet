@@ -147,18 +147,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Account.h" />
-    <ClInclude Include="Bill.h" />
-    <ClInclude Include="EventSytem.h" />
+    <ClInclude Include="lib\Account.h" />
+    <ClInclude Include="lib\Bill.h" />
+    <ClInclude Include="lib\EventSytem.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="lib\pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BillImpl.cpp" />
+    <ClCompile Include="lib\BillImpl.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="EventSytemImpl.cpp" />
-    <ClCompile Include="AccountImpl.cpp" />
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="lib\EventSytemImpl.cpp" />
+    <ClCompile Include="lib\AccountImpl.cpp" />
+    <ClCompile Include="lib\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
