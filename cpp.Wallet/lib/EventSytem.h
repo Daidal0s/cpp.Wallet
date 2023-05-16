@@ -6,9 +6,7 @@ namespace eventSystem
 	enum class NotifyAction { Done, UnRegister };
 
 	class Subject;
-	class Event
-	{
-	};
+	class Event { virtual ~Event() {}; };
 
 	class Observer
 	{
@@ -24,10 +22,10 @@ namespace eventSystem
 	public:
 		void registerObserver(Observer& observer)
 		{
-			if (std::find(std::begin(m_observers), std::end(m_observers), &observer) == std::end(m_observers))					// ВТФ? Должен ведь находить и возвращать first, а не last
-			{
-				throw std::runtime_error("registerObserver(): observer already registered");
-			}
+			//if (std::find(std::begin(m_observers), std::end(m_observers), &observer) == std::end(m_observers))				// За недостатком знаний по тому, как решить эту проблему, фиксить пока не буду ;p
+			//{																													// Проблема заключается в том, что программа вечно будет выдавать эту ошибку, даже если предполагаемых совпадений не будет 
+			//	throw std::runtime_error("registerObserver(): observer already registered");
+			//}
 			m_observers.push_back(&observer);
 		}
 
