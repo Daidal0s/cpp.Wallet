@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\observer.System.Test"
   ],
-  "SelectedNode": "\\cpp.Wallet.sln",
+  "SelectedNode": "\\testConsole",
   "PreviewInSolutionExplorer": false
 }

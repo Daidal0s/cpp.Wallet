@@ -150,12 +150,12 @@
     <ClInclude Include="lib\Account.h" />
     <ClInclude Include="lib\Bill.h" />
     <ClInclude Include="lib\EventSytem.h" />
-    <ClInclude Include="framework.h" />
+    <ClInclude Include="lib\framework.h" />
     <ClInclude Include="lib\pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\BillImpl.cpp" />
-    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="lib\dllmain.cpp" />
     <ClCompile Include="lib\EventSytemImpl.cpp" />
     <ClCompile Include="lib\AccountImpl.cpp" />
     <ClCompile Include="lib\pch.cpp">
