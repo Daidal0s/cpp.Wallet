@@ -32,3 +32,5 @@
 /cpp.Wallet/x64/Debug
 /cpp.Wallet/x64/Release
 /testConsole/x64
+/bin/tests/
+/libs/cpp.Wallet.lib/

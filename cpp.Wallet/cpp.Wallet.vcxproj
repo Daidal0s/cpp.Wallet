@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{afb6f05d-6383-4860-8738-08ebea78a848}</ProjectGuid>
-    <RootNamespace>cppWallet</RootNamespace>
+    <RootNamespace>cppWalletlib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>cpp.Wallet.lib</ProjectName>
   </PropertyGroup>
