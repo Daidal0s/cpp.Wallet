@@ -1,7 +1,8 @@
 #pragma once
 #include "pch.h"
+#include "EventSytem.h"
 
-struct MYDLL_API stTime
+struct stTime
 {
 	std::chrono::years Y;
 	std::chrono::months Mon;
@@ -36,12 +37,13 @@ namespace Bills
 		DECREASE
 	};
 
-	class MYDLL_API Bill
+	class MYDLL_API Bill : public eventSystem::Subject
 	{
 	private:
 		class impl;
 		std::unique_ptr<impl> pimpl;
 	public:
+		// Bill();
 		Bill();
 		~Bill();
 	public:
@@ -49,8 +51,9 @@ namespace Bills
 		Bill& operator=(const Bill& rhs);
 		Bill(Bill&& other) noexcept;
 		Bill& operator=(Bill&& rhs) noexcept;
-	protected:
+	public:
 		std::string billString();
+		void setBillId(int32_t lastId);
 	};
 
 	class MYDLL_API BillList

@@ -64,11 +64,22 @@ std::string Time::stringTime() const { return pimpl->stringTime(); }
 class Bills::Bill::impl
 {
 private:
-	
+	int32_t m_value = 0;
+	eOperationType m_opType = eOperationType::DECREASE;
+	static int32_t m_billId;
 public:
+	impl()
+	{
 
+	}
 public:
+	void setBillId(int32_t lastId)
+	{
+		m_billId = lastId;
+	}
 };
+
+int32_t Bills::Bill::impl::m_billId = 0;
 
 class Bills::BillList::impl
 {
@@ -80,3 +91,4 @@ public:
 public:
 
 };
+
