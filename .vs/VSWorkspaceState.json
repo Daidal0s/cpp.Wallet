@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\libs",
-    "\\libs\\glfw"
+    ""
   ],
-  "SelectedNode": "\\libs\\glfw\\lib-vc2010-64",
+  "SelectedNode": "\\cpp.Wallet.sln",
   "PreviewInSolutionExplorer": false
 }

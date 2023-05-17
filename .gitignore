@@ -29,8 +29,8 @@
 *.out
 *.app
 /.vs/cpp.Wallet
-/cpp.Wallet/x64/Debug
-/cpp.Wallet/x64/Release
-/testConsole/x64
 /bin/tests/
-/libs/cpp.Wallet.lib/
+/libs/walletLib/
+/walletLib/temp/
+/testConsole/temp/
+/observer.GUI.Test/temp/
