@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\walletLib",
+    "\\walletLib\\lib"
   ],
-  "SelectedNode": "\\cpp.Wallet.sln",
+  "SelectedNode": "\\walletLib\\lib\\Bill.h",
   "PreviewInSolutionExplorer": false
 }

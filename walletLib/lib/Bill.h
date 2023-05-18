@@ -12,6 +12,15 @@ struct stTime
 	std::chrono::seconds S;
 };
 
+const stTime zeroTime{
+	static_cast<std::chrono::years>(0),
+	static_cast<std::chrono::months>(0),
+	static_cast<std::chrono::days>(0),
+	static_cast<std::chrono::hours>(0),
+	static_cast<std::chrono::minutes>(0),
+	static_cast<std::chrono::seconds>(0)
+};
+
 class MYDLL_API Time
 {
 private:
@@ -21,10 +30,15 @@ public:
 	Time();
 	~Time();
 public:
+	Time(const Time& other);
+	Time& operator=(const Time& rhs);
+	Time(Time&& other) noexcept = default;
+	Time& operator=(Time&& rhs) noexcept = default;
+public:
 	void setTime(int hours, int minutes, int seconds);
 	void setDate(int day, int month, int year);
-	void getTime(int *hours, int *minutes, int *seconds) const;
-	void getDate(int *day, int *month, int *year) const;
+	void getTime(int* hours, int* minutes, int* seconds) const;
+	void getDate(int* day, int* month, int* year) const;
 	std::string stringDate() const;
 	std::string stringTime() const;
 };
@@ -33,7 +47,7 @@ namespace Bills
 {
 	enum class eOperationType : int8_t
 	{
-		INREASE = 0,
+		INCREASE = 0,
 		DECREASE
 	};
 
@@ -43,17 +57,25 @@ namespace Bills
 		class impl;
 		std::unique_ptr<impl> pimpl;
 	public:
-		// Bill();
-		Bill();
+		Bill(int32_t value, eOperationType opType, const Time& operationTime);
+		Bill(int32_t currentId, int32_t value, eOperationType opType, const Time& operationTime);
 		~Bill();
 	public:
 		Bill(const Bill& other);
 		Bill& operator=(const Bill& rhs);
-		Bill(Bill&& other) noexcept;
-		Bill& operator=(Bill&& rhs) noexcept;
+		Bill(Bill&& other) noexcept = default;
+		Bill& operator=(Bill&& rhs) noexcept = default;
 	public:
-		std::string billString();
-		void setBillId(int32_t lastId);
+		void setBillStaticId(int32_t lastId);
+		void setValue(int32_t value);
+		void setOpType(eOperationType type);
+		void setCurrentId(int32_t id);
+		void setOperationTime(Time time);
+
+		int32_t	getValue();
+		eOperationType getOperationType();
+		int32_t getCurrentId();
+		Time* getOperationTime();
 	};
 
 	class MYDLL_API BillList
@@ -62,11 +84,11 @@ namespace Bills
 		class impl;
 		std::unique_ptr<impl> pimpl;
 	public:
-		BillList(int32_t walletId);
+		BillList();
 		~BillList();
 	public:
 		void addBill(Bill& bill);
 		void removeBill(Bill& bill);
-		std::list<Bill> getBillList() const;
+		void printBills();
 	};
 }

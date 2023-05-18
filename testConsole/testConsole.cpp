@@ -5,26 +5,46 @@
 
 int main()
 {
-    AccountsList accList;
-    Account acc("testo", Wallet::DOLLAR, 21);
-    Account acc1("test1o", Wallet::DOLLAR, 22);
-    Account acc2(acc1);
+	AccountsList accList;
+	Bills::BillList bl;
 
-    accList.addAccount(acc);
-    accList.addAccount(acc1);
-    accList.addAccount(acc2);
+	Account acc("testo", eWallet::DOLLAR, 21);
+	Account acc1("test1o", eWallet::DOLLAR, 22);
+	Account acc2(acc1);
+	Account acc3 = acc;
 
-    Time time;
-    time.setDate(12, 2, 123);
+	Bills::Bill bill(123, Bills::eOperationType::INCREASE, Time());
+	Bills::Bill bill1(1233, Bills::eOperationType::INCREASE, Time());
+	Bills::Bill bill2(bill1);
+	Bills::Bill bill3 = bill;
 
-    std::cout << acc.getAccountId() << " " << acc1.getAccountId() << " " << time.stringDate();
+	accList.addAccount(acc);
+	accList.addAccount(acc1);
+	accList.addAccount(acc2);
+	accList.addAccount(acc3);
 
-    accList.printIds();
+	bl.addBill(bill);
+	bl.addBill(bill1);
+	bl.addBill(bill2);
+	bl.addBill(bill3);
 
-    accList.removeAccount(acc1);
+	Time time;
+	time.setDate(12, 2, 123);
+	time.setTime(19, 5, 6);
 
-    accList.printIds();
+	std::cout << acc.getAccountId() << " " << acc1.getAccountId() << " " << time.stringDate();
 
-    std::cin.get();
-    std::cin.get();
+	accList.printIds();
+
+	accList.removeAccount(acc1);
+
+	accList.printIds();
+
+	std::cout << time.stringDate();
+	std::cout << time.stringTime();
+
+	bl.printBills();
+
+	std::cin.get();
+	std::cin.get();
 }
