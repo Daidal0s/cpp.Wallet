@@ -95,5 +95,7 @@ namespace Bills
 		void addBill(Bill& bill);
 		void removeBill(Bill& bill);
 		void printBills();
+
+		std::list<Bill*> *getList();
 	};
 }

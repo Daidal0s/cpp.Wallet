@@ -185,6 +185,7 @@ public:
 				<< "asdas" << c->getOperationTime().stringDate() << "\t" << c->getOperationTime().stringTime() << "\n";
 		}
 	}
+	std::list<Bill*>* getList() { return &m_billList; }
 };
 
 Bills::BillList::BillList() :
@@ -205,3 +206,4 @@ Bills::BillList& Bills::BillList::operator=(const BillList& rhs)
 void Bills::BillList::addBill(Bill& bill) { pimpl->addBill(bill); }
 void Bills::BillList::removeBill(Bill& bill) { pimpl->removeBill(bill); }
 void Bills::BillList::printBills() { pimpl->printBills(); }
+std::list<Bills::Bill*>* Bills::BillList::getList() { return pimpl->getList(); }
