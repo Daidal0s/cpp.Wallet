@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "EventSytem.h"
+#include "Bill.h"
 
 enum class eWallet : wchar_t
 {
@@ -25,9 +26,10 @@ public:
 	Account& operator=(Account&& rhs) noexcept;
 public:
 	void setName(std::string name);
-	std::string getName();
 	void setStaticId(int32_t id);
 
+	Bills::BillList &getBillList();
+	std::string getName();
 	int32_t getAccountId();
 	eWallet getWallet();
 	int64_t getValue();

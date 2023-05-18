@@ -75,10 +75,10 @@ namespace Bills
 		int32_t	getValue();
 		eOperationType getOperationType();
 		int32_t getCurrentId();
-		Time* getOperationTime();
+		Time& getOperationTime();
 	};
 
-	class MYDLL_API BillList
+	class MYDLL_API BillList : public eventSystem::Subject
 	{
 	private:
 		class impl;
@@ -86,6 +86,11 @@ namespace Bills
 	public:
 		BillList();
 		~BillList();
+	public:
+		BillList(const BillList& other);
+		BillList& operator=(const BillList& rhs);
+		BillList(BillList&& other) noexcept = default;
+		BillList& operator=(BillList&& rhs) noexcept = default;
 	public:
 		void addBill(Bill& bill);
 		void removeBill(Bill& bill);

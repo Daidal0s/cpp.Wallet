@@ -1,9 +1,12 @@
 #include "pch.h"
 #include "Accounts.h"
+#include "Bill.h"
 
 class Account::impl
 {
 private:
+	Bills::BillList m_billList;
+
 	static int32_t m_accountId;
 	int32_t m_currentId;
 	std::string m_name = "test";
@@ -28,7 +31,8 @@ public:
 	impl(const Account& other) :
 		m_name(other.pimpl->m_name),
 		m_wallet(other.pimpl->m_wallet),
-		m_value(other.pimpl->m_value)
+		m_value(other.pimpl->m_value),
+		m_billList(other.pimpl->m_billList)
 	{ 
 		m_currentId = ++m_accountId;
 	}
@@ -36,6 +40,7 @@ public:
 	void setName(std::string name) { m_name = name; }
 	void setStaticId(int32_t id) { m_accountId = id; }
 
+	Bills::BillList& getBillList() { return m_billList; }
 	std::string getName() { return m_name; }
 	int32_t getAccountId() { return m_currentId; }
 	eWallet getWallet() { return m_wallet; }
@@ -74,6 +79,7 @@ Account& Account::operator=(Account&& rhs) noexcept = default;
 void Account::setName(std::string name) { pimpl->setName(name); }
 void Account::setStaticId(int32_t id) { pimpl->setStaticId(id); }
 
+Bills::BillList& Account::getBillList() { return pimpl->getBillList(); }
 std::string Account::getName() { return pimpl->getName(); }
 int32_t Account::getAccountId() { return pimpl->getAccountId(); }
 eWallet Account::getWallet() { return pimpl->getWallet(); }

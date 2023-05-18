@@ -58,8 +58,8 @@ Time::~Time() { }
 Time::Time(const Time& other) :
 	pimpl(std::make_unique<impl>(other))
 { }
-Time& Time::operator=(const Time& rhs) 
-{ 
+Time& Time::operator=(const Time& rhs)
+{
 	if (this != &rhs)
 		pimpl.reset(new impl(*rhs.pimpl));
 	return *this;
@@ -115,7 +115,7 @@ public:
 	int32_t	getValue() { return m_value; }
 	eOperationType getOperationType() { return m_opType; }
 	int32_t getCurrentId() { return m_currentId; }
-	Time *getOperationTime() { return &m_operationTime; }
+	Time& getOperationTime() { return m_operationTime; }
 };
 
 int32_t Bills::Bill::impl::m_billId = 0;
@@ -148,7 +148,7 @@ void Bills::Bill::setOperationTime(Time time) { pimpl->setOperationTime(time); }
 int32_t Bills::Bill::getValue() { return pimpl->getValue(); }
 Bills::eOperationType Bills::Bill::getOperationType() { return pimpl->getOperationType(); }
 int32_t Bills::Bill::getCurrentId() { return pimpl->getCurrentId(); }
-Time* Bills::Bill::getOperationTime() { return pimpl->getOperationTime(); }
+Time& Bills::Bill::getOperationTime() { return pimpl->getOperationTime(); }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -161,6 +161,10 @@ private:
 public:
 	impl() { }
 	~impl() { }
+public:
+	impl(const BillList& other) :
+		m_billList(other.pimpl->m_billList)
+	{ }
 public:
 	void addBill(Bill& bill)
 	{
@@ -178,7 +182,7 @@ public:
 			std::cout << "id: " << c->getCurrentId() << "\n"
 				<< "Operation Type: " << (c->getOperationType() == eOperationType::DECREASE ? "Decrease" : "Increase") << "\n"
 				<< "Value: " << c->getValue() << "\n"
-				<< "asdas" << c->getOperationTime()->stringDate() << "\t" << c->getOperationTime()->stringTime() << "\n";
+				<< "asdas" << c->getOperationTime().stringDate() << "\t" << c->getOperationTime().stringTime() << "\n";
 		}
 	}
 };
@@ -187,6 +191,16 @@ Bills::BillList::BillList() :
 	pimpl(std::make_unique<impl>())
 { }
 Bills::BillList::~BillList() { pimpl->~impl(); }
+
+Bills::BillList::BillList(const BillList& other) :
+	pimpl(std::make_unique<impl>(other))
+{ }
+Bills::BillList& Bills::BillList::operator=(const BillList& rhs)
+{
+	if (this != &rhs)
+		pimpl.reset(new impl(*rhs.pimpl));
+	return *this;
+}
 
 void Bills::BillList::addBill(Bill& bill) { pimpl->addBill(bill); }
 void Bills::BillList::removeBill(Bill& bill) { pimpl->removeBill(bill); }

@@ -7,26 +7,28 @@ int main()
 {
 	AccountsList accList;
 	Bills::BillList bl;
-
-	Account acc("testo", eWallet::DOLLAR, 21);
-	Account acc1("test1o", eWallet::DOLLAR, 22);
-	Account acc2(acc1);
-	Account acc3 = acc;
-
+	
 	Bills::Bill bill(123, Bills::eOperationType::INCREASE, Time());
 	Bills::Bill bill1(1233, Bills::eOperationType::INCREASE, Time());
 	Bills::Bill bill2(bill1);
 	Bills::Bill bill3 = bill;
 
-	accList.addAccount(acc);
-	accList.addAccount(acc1);
-	accList.addAccount(acc2);
-	accList.addAccount(acc3);
+	Account acc("testo", eWallet::DOLLAR, 21);
+	
+	acc.getBillList().addBill(bill);
+	acc.getBillList().addBill(bill1);
+	acc.getBillList().addBill(bill2);
+	acc.getBillList().addBill(bill3);
+	
+	Account acc1("test1o", eWallet::DOLLAR, 22);
+	acc1.getBillList().addBill(bill);
+	acc1.getBillList().addBill(bill1);
 
-	bl.addBill(bill);
-	bl.addBill(bill1);
-	bl.addBill(bill2);
-	bl.addBill(bill3);
+	Account acc2(acc1);
+	Account acc3 = acc;
+
+
+	accList.addAccount(acc);
 
 	Time time;
 	time.setDate(12, 2, 123);
@@ -43,7 +45,8 @@ int main()
 	std::cout << time.stringDate();
 	std::cout << time.stringTime();
 
-	bl.printBills();
+	acc.getBillList().printBills();
+	acc1.getBillList().printBills();
 
 	std::cin.get();
 	std::cin.get();
