@@ -1,0 +1,174 @@
+[
+    {
+        "NumberOfAccounts": 3
+    },
+    {
+        "Account": {
+            "Bills": [
+                {
+                    "Bill": {
+                        "Date": {
+                            "Day": 0,
+                            "Month": 0,
+                            "Year": 0
+                        },
+                        "ID": 0,
+                        "OperationType": 0,
+                        "Time": {
+                            "Hours": 0,
+                            "Minutes": 0,
+                            "Seconds": 0
+                        },
+                        "Value": 123
+                    }
+                },
+                {
+                    "Bill": {
+                        "Date": {
+                            "Day": 0,
+                            "Month": 0,
+                            "Year": 0
+                        },
+                        "ID": 1,
+                        "OperationType": 0,
+                        "Time": {
+                            "Hours": 0,
+                            "Minutes": 0,
+                            "Seconds": 0
+                        },
+                        "Value": 1233
+                    }
+                },
+                {
+                    "Bill": {
+                        "Date": {
+                            "Day": 0,
+                            "Month": 0,
+                            "Year": 0
+                        },
+                        "ID": 2,
+                        "OperationType": 0,
+                        "Time": {
+                            "Hours": 0,
+                            "Minutes": 0,
+                            "Seconds": 0
+                        },
+                        "Value": 1233
+                    }
+                },
+                {
+                    "Bill": {
+                        "Date": {
+                            "Day": 0,
+                            "Month": 0,
+                            "Year": 0
+                        },
+                        "ID": 3,
+                        "OperationType": 0,
+                        "Time": {
+                            "Hours": 0,
+                            "Minutes": 0,
+                            "Seconds": 0
+                        },
+                        "Value": 123
+                    }
+                }
+            ],
+            "ID": 0,
+            "Name": "testo",
+            "NumberOfBills": 4,
+            "Value": 21,
+            "Wallet": 69
+        }
+    },
+    {
+        "Account": {
+            "Bills": [
+                {
+                    "Bill": {
+                        "Date": {
+                            "Day": 0,
+                            "Month": 0,
+                            "Year": 0
+                        },
+                        "ID": 0,
+                        "OperationType": 0,
+                        "Time": {
+                            "Hours": 0,
+                            "Minutes": 0,
+                            "Seconds": 0
+                        },
+                        "Value": 123
+                    }
+                },
+                {
+                    "Bill": {
+                        "Date": {
+                            "Day": 0,
+                            "Month": 0,
+                            "Year": 0
+                        },
+                        "ID": 1,
+                        "OperationType": 0,
+                        "Time": {
+                            "Hours": 0,
+                            "Minutes": 0,
+                            "Seconds": 0
+                        },
+                        "Value": 1233
+                    }
+                }
+            ],
+            "ID": 1,
+            "Name": "test1o",
+            "NumberOfBills": 2,
+            "Value": 22,
+            "Wallet": 68
+        }
+    },
+    {
+        "Account": {
+            "Bills": [
+                {
+                    "Bill": {
+                        "Date": {
+                            "Day": 0,
+                            "Month": 0,
+                            "Year": 0
+                        },
+                        "ID": 0,
+                        "OperationType": 0,
+                        "Time": {
+                            "Hours": 0,
+                            "Minutes": 0,
+                            "Seconds": 0
+                        },
+                        "Value": 123
+                    }
+                },
+                {
+                    "Bill": {
+                        "Date": {
+                            "Day": 0,
+                            "Month": 0,
+                            "Year": 0
+                        },
+                        "ID": 1,
+                        "OperationType": 0,
+                        "Time": {
+                            "Hours": 0,
+                            "Minutes": 0,
+                            "Seconds": 0
+                        },
+                        "Value": 1233
+                    }
+                }
+            ],
+            "ID": 2,
+            "Name": "test1o",
+            "NumberOfBills": 2,
+            "Value": 22,
+            "Wallet": 68
+        }
+    }
+]

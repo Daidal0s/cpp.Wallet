@@ -127,7 +127,7 @@ Bills::Bill::Bill(int32_t currentId, int32_t value, eOperationType opType, const
 	pimpl(std::make_unique<impl>(currentId, value, opType, operationTime))
 { }
 
-Bills::Bill::~Bill() { pimpl->~impl(); }
+Bills::Bill::~Bill() { }
 
 Bills::Bill::Bill(const Bill& other) :
 	pimpl(std::make_unique<impl>(other))
@@ -157,7 +157,7 @@ Time& Bills::Bill::getOperationTime() { return pimpl->getOperationTime(); }
 class Bills::BillList::impl
 {
 private:
-	std::list<Bill*> m_billList;
+	std::vector<std::shared_ptr<Bill>> m_billList;
 public:
 	impl() { }
 	~impl() { }
@@ -166,13 +166,17 @@ public:
 		m_billList(other.pimpl->m_billList)
 	{ }
 public:
+	std::vector<std::shared_ptr<Bill>> getList() { return m_billList; }
+	int32_t getNumberOfBills() const { return m_billList.size(); }
+
 	void addBill(Bill& bill)
 	{
-		m_billList.push_back(&bill);
+		m_billList.push_back(std::make_shared<Bill>(bill));
+		m_billList.back()->setCurrentId(m_billList.size() - 1);
 	}
-	void removeBill(Bill& bill)
+	void removeBill(int32_t id)
 	{
-		m_billList.remove(&bill);
+		m_billList.erase(m_billList.begin() + id);
 	}
 	void printBills()
 	{
@@ -185,13 +189,12 @@ public:
 				<< "asdas" << c->getOperationTime().stringDate() << "\t" << c->getOperationTime().stringTime() << "\n";
 		}
 	}
-	std::list<Bill*>* getList() { return &m_billList; }
 };
 
 Bills::BillList::BillList() :
 	pimpl(std::make_unique<impl>())
 { }
-Bills::BillList::~BillList() { pimpl->~impl(); }
+Bills::BillList::~BillList() { }
 
 Bills::BillList::BillList(const BillList& other) :
 	pimpl(std::make_unique<impl>(other))
@@ -203,7 +206,9 @@ Bills::BillList& Bills::BillList::operator=(const BillList& rhs)
 	return *this;
 }
 
+std::vector<std::shared_ptr<Bills::Bill>> Bills::BillList::getList() { return pimpl->getList(); }
+int32_t Bills::BillList::getNumberOfBills() const { return pimpl->getNumberOfBills(); }
+
 void Bills::BillList::addBill(Bill& bill) { pimpl->addBill(bill); }
-void Bills::BillList::removeBill(Bill& bill) { pimpl->removeBill(bill); }
+void Bills::BillList::removeBill(int32_t id) { pimpl->removeBill(id); }
 void Bills::BillList::printBills() { pimpl->printBills(); }
-std::list<Bills::Bill*>* Bills::BillList::getList() { return pimpl->getList(); }

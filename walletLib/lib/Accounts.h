@@ -27,6 +27,7 @@ public:
 public:
 	void setName(std::string name);
 	void setStaticId(int32_t id);
+	void setId(int32_t id);
 
 	Bills::BillList &getBillList();
 	std::string getName();
@@ -47,7 +48,15 @@ public:
 	AccountsList();
 	~AccountsList();
 public:
+	AccountsList(const AccountsList& other);
+	AccountsList& operator=(const AccountsList& rhs);
+	AccountsList(AccountsList&& other) noexcept = default;
+	AccountsList& operator=(AccountsList&& rhs) noexcept = default;
+public:
+	std::vector<std::shared_ptr<Account>> getAccountList();
+	int32_t getNumberOfAccounts() const;
+
 	void addAccount(Account& acc);
-	void removeAccount(Account& acc);
+	void removeAccount(int32_t id);
 	void printIds();
 };

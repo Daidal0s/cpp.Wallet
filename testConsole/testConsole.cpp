@@ -2,35 +2,7 @@
 #include "Accounts.h"
 #include "Bill.h"
 #include "EventHandlers.h"
-#include <fstream>
-#include <nlohmann/json.hpp>
-
-void createJsonFile(Account& acc, nlohmann::json j)
-{
-	nlohmann::json bills;
-	j = {
-		{"Account",
-			{
-				{"AccountID", acc.getAccountId()},
-				{"AccountName", acc.getName()},
-				{"AccountWallet", acc.getWallet()},
-				{"AccountValue", acc.getValue()}
-			}
-		}
-	};
-	bills =
-	{
-		{"BillsList",
-		{
-
-		}
-		}
-	};
-	for (auto c : *acc.getBillList().getList())
-	{
-	}
-}
-
+#include "IO.h"
 
 int main()
 {
@@ -38,6 +10,8 @@ int main()
 	json jim;
 
 	AccountsList accList;
+	AccountsList accList1;
+
 	Bills::BillList bl;
 
 	Bills::Bill bill(123, Bills::eOperationType::INCREASE, Time());
@@ -59,8 +33,9 @@ int main()
 	Account acc2(acc1);
 	Account acc3 = acc;
 
-
 	accList.addAccount(acc);
+	accList.addAccount(acc1);
+	accList.addAccount(acc2);
 
 	Time time;
 	time.setDate(12, 2, 123);
@@ -68,11 +43,13 @@ int main()
 
 	std::cout << acc.getAccountId() << " " << acc1.getAccountId() << " " << time.stringDate();
 
+	int a = accList.getAccountList().size();
+	
 	accList.printIds();
 
-	accList.removeAccount(acc1);
+	IO::saveAccounts(accList);
 
-	accList.printIds();
+	accList.removeAccount(accList.getAccountList().back()->getAccountId());
 
 	std::cout << time.stringDate();
 	std::cout << time.stringTime();
@@ -80,7 +57,9 @@ int main()
 	acc.getBillList().printBills();
 	acc1.getBillList().printBills();
 
-	createJsonFile(acc, jim);
+	IO::loadAccounts(accList1);
+
+	accList1.printIds();
 
 	std::cin.get();
 	std::cin.get();

@@ -92,10 +92,11 @@ namespace Bills
 		BillList(BillList&& other) noexcept = default;
 		BillList& operator=(BillList&& rhs) noexcept = default;
 	public:
-		void addBill(Bill& bill);
-		void removeBill(Bill& bill);
-		void printBills();
+		std::vector<std::shared_ptr<Bill>> getList();
+		int32_t getNumberOfBills() const;
 
-		std::list<Bill*> *getList();
+		void addBill(Bill& bill);
+		void removeBill(int32_t id);
+		void printBills();
 	};
 }

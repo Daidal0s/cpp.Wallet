@@ -38,6 +38,7 @@ public:
 	}
 public:
 	void setName(std::string name) { m_name = name; }
+	void setId(int32_t id) { m_currentId = id; }
 	void setStaticId(int32_t id) { m_accountId = id; }
 
 	Bills::BillList& getBillList() { return m_billList; }
@@ -59,10 +60,7 @@ Account::Account(int32_t id, const std::string& name, eWallet wallet, int64_t va
 	pimpl(std::make_unique<impl>(id, name, wallet, value))
 { }
 
-Account::~Account()
-{
-	pimpl->~impl();
-}
+Account::~Account() { }
 
 Account::Account(const Account& other) :
 	pimpl(std::make_unique<impl>(other))
@@ -78,6 +76,7 @@ Account& Account::operator=(Account&& rhs) noexcept = default;
 
 void Account::setName(std::string name) { pimpl->setName(name); }
 void Account::setStaticId(int32_t id) { pimpl->setStaticId(id); }
+void Account::setId(int32_t id) { pimpl->setId(id); }
 
 Bills::BillList& Account::getBillList() { return pimpl->getBillList(); }
 std::string Account::getName() { return pimpl->getName(); }
@@ -92,18 +91,32 @@ void Account::reduceValue(int32_t value) { pimpl->reduceValue(value); }
 class AccountsList::impl
 {
 private:
-	std::list<Account*> m_accList;
+	std::vector<std::shared_ptr<Account>> m_accList;
 public:
 	impl() { }
 	~impl()	{ }
 public:
+	impl(const AccountsList& other) :
+		m_accList(other.pimpl->m_accList)
+	{ }
+public:
+	int32_t getNumberOfAccounts() const
+	{
+		return m_accList.size();
+	}
+	std::vector<std::shared_ptr<Account>> getAccountList()
+	{
+		return m_accList;
+	}
+
 	void addAccount(Account& acc)
 	{
-		m_accList.push_back(&acc);
+		m_accList.push_back(std::make_shared<Account>(acc));
+		m_accList.back()->setId(m_accList.size()-1);
 	}
-	void removeAccount(Account& acc)
+	void removeAccount(int32_t id)
 	{
-		m_accList.remove(&acc);
+		m_accList.erase(m_accList.begin() + id);
 	}
 	void printIds()
 	{
@@ -118,8 +131,19 @@ public:
 AccountsList::AccountsList() : 
 	pimpl(std::make_unique<impl>())
 { }
-AccountsList::~AccountsList() { pimpl->~impl(); }
+AccountsList::~AccountsList() { }
+
+AccountsList::AccountsList(const AccountsList& other) { }
+AccountsList& AccountsList::operator=(const AccountsList& rhs)
+{
+	if (this != &rhs)
+		pimpl.reset(new impl(*rhs.pimpl));
+	return *this;
+}
+
+std::vector<std::shared_ptr<Account>> AccountsList::getAccountList() { return pimpl.get()->getAccountList(); }
+int32_t AccountsList::getNumberOfAccounts() const {	return pimpl->getNumberOfAccounts(); }
 
 void AccountsList::addAccount(Account& acc) { pimpl->addAccount(acc); }
-void AccountsList::removeAccount(Account& acc) { pimpl->removeAccount(acc); }
+void AccountsList::removeAccount(int32_t id) { pimpl->removeAccount(id); }
 void AccountsList::printIds() { pimpl->printIds(); }
