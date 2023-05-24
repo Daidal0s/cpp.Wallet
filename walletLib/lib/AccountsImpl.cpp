@@ -26,6 +26,10 @@ public:
 		m_value(value),
 		m_currentId(id)
 	{ }
+	impl(int32_t id, const std::string& name, eWallet wallet, int64_t value, Bills::BillList bills) :
+		impl(id, name, wallet, value),
+		m_billList(bills)
+	{ }
 	~impl() { }
 public:
 	impl(const Account& other) :
@@ -58,6 +62,9 @@ Account::Account(const std::string& name, eWallet wallet, int64_t value) :
 { }
 Account::Account(int32_t id, const std::string& name, eWallet wallet, int64_t value) :
 	pimpl(std::make_unique<impl>(id, name, wallet, value))
+{ }
+Account::Account(int32_t id, const std::string& name, eWallet wallet, int64_t value, Bills::BillList bills) :
+	pimpl(std::make_unique<impl>(id, name, wallet, value, bills))
 { }
 
 Account::~Account() { }
