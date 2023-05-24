@@ -2,12 +2,11 @@
 #include "pch.h"
 #include "Accounts.h"
 
-
-// void saveAccounts(std::span<Account*>);
-
 namespace IO
 {
 	using json = nlohmann::json;
+
+	const std::string fileName = "Accounts.json";
 
 	eWallet findTypeOfWallet(int32_t num)
 	{
@@ -39,7 +38,7 @@ namespace IO
 		}
 	}
 
-	void saveAccounts(AccountsList& acc)
+	static void saveAccounts(AccountsList& acc)
 	{
 		json j;
 		int32_t y(0), mon(0), d(0), h(0), mins(0), s(0);
@@ -96,14 +95,13 @@ namespace IO
 			}
 		}
 
-		std::ofstream("Accounts.json") << std::setw(4) << j;
+		std::ofstream(fileName) << std::setw(4) << j;
 	}
-
 
 	static void loadAccounts(AccountsList& acc)
 	{
 		json j, inp;
-		std::ifstream input("Accounts.json");
+		std::ifstream input(fileName);
 		j = inp.parse(input);
 		input.close();
 
@@ -161,5 +159,10 @@ namespace IO
 		}
 
 		acc = accList;																// TODO: ядекюрэ онкмнжеммн RULE OF FIVE бегдее!!!!!
+	}
+
+	static bool checkForSave()
+	{
+		return std::ifstream(fileName).is_open();
 	}
 }
