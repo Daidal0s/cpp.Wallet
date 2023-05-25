@@ -46,6 +46,12 @@ namespace ImGui
 		}
 	}
 
+	struct AccountWindows
+	{
+	public:
+		bool show_addBillMenu = true;
+		bool show_billsList = true;
+	};
 
 	void addBill(Bills::BillList& bills, bool* p_open, std::string& name)
 	{
@@ -114,7 +120,7 @@ namespace ImGui
 		}
 	}
 
-	void AccountGenerator(AccountsList& accList, int32_t index)
+	void AccountGenerator(AccountsList& accList, int32_t index, bool* showAccounts)
 	{
 
 		std::string name = accList.getAccountList().at(index)->getName();
@@ -124,17 +130,18 @@ namespace ImGui
 		Bills::BillList& billList = accList.getAccountList().at(index)->getBillList();
 
 		{
-			bool show_addBillMenu = true;
-			bool show_billsList = true;
+			AccountWindows accWins;
 
-			ImGui::Begin(name.c_str(), NULL, ImGuiWindowFlags_MenuBar);
+			// ImGui::SetNextItemOpen(showAccounts, ImGuiCond_None);
+
+			ImGui::Begin(name.c_str(), showAccounts, ImGuiWindowFlags_MenuBar);
 
 			if (ImGui::BeginMenuBar())
 			{
 				if (ImGui::BeginMenu("Bills"))
 				{
-					if (ImGui::MenuItem("Add Bill", NULL, &show_addBillMenu)) {}
-					if (ImGui::MenuItem("Show Bills", NULL, &show_billsList)) {}
+					if (ImGui::MenuItem("Add Bill", NULL, &accWins.show_addBillMenu)) {}
+					if (ImGui::MenuItem("Show Bills", NULL, &accWins.show_billsList)) {}
 					ImGui::EndMenu();
 				}
 				ImGui::EndMenuBar();
@@ -144,8 +151,8 @@ namespace ImGui
 			ImGui::Text(eWalletToString(walletType).c_str());
 			ImGui::Text("Value: %d", value);
 
-			if (show_addBillMenu)
-				addBill(billList, &show_addBillMenu, name);
+			if (accWins.show_addBillMenu)
+				addBill(billList, &accWins.show_addBillMenu, name);
 
 			ImGui::End();
 		}

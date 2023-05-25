@@ -83,7 +83,7 @@ int main()
 
 		if (show_accounts)
 			for (int32_t iii = 0; iii < _accountList.getNumberOfAccounts(); ++iii)
-				ImGui::AccountGenerator(_accountList, iii);
+				ImGui::AccountGenerator(_accountList, iii, &show_accounts);
 
 		// Rendering
 		ImGui::Render();
