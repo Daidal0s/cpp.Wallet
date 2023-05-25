@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\Imgui">
+      <UniqueIdentifier>{11004e6b-e4cb-442d-be57-e7dc806bade1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Imgui">
+      <UniqueIdentifier>{62f0e97e-0c96-4f21-8f78-100efd0b7ede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Wallet.cpp">
@@ -21,10 +27,80 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Файлы заголовков</Filter>
     </ClCompile>
+    <ClCompile Include="..\ImGui\imgui_tables.cpp">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGui\imgui.cpp">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGui\imgui_demo.cpp">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGui\imgui_draw.cpp">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGui\imgui_widgets.cpp">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGui\backends\imgui_impl_glfw.cpp">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGui\backends\imgui_impl_opengl3.cpp">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ImGui\misc\cpp\imgui_stdlib.cpp">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="..\ImGui\imconfig.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGui\imgui.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGui\imgui_internal.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGui\imstb_rectpack.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGui\imstb_textedit.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGui\imstb_truetype.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGui\backends\imgui_impl_glfw.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGui\backends\imgui_impl_opengl3.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGui\backends\imgui_impl_opengl3_loader.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ImGui\misc\cpp\imgui_stdlib.h">
+      <Filter>Файлы заголовков\Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_walletGui.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ImGui\misc\debuggers\imgui.gdb">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </None>
+    <None Include="..\ImGui\misc\debuggers\imgui.natstepfilter">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\ImGui\misc\debuggers\imgui.natvis">
+      <Filter>Исходные файлы\Imgui</Filter>
+    </Natvis>
   </ItemGroup>
 </Project>

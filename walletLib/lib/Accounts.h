@@ -18,7 +18,7 @@ private:
 public:
 	Account(const std::string &name, eWallet wallet = eWallet::DOLLAR, int64_t value = 0);
 	Account(int32_t id, const std::string& name, eWallet wallet = eWallet::DOLLAR, int64_t value = 0);			// TODO: Решить проблему 2-х конструкторов
-	Account(int32_t id, const std::string& name, eWallet wallet = eWallet::DOLLAR, int64_t value = 0, Bills::BillList bills);
+	//Account(int32_t id, const std::string& name, eWallet wallet = eWallet::DOLLAR, int64_t value = 0, Bills::BillList bills);
 	~Account();
 public:
 	Account(const Account& other);

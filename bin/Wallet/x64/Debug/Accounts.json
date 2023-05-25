@@ -1,0 +1,33 @@
+[
+    {
+        "NumberOfAccounts": 1
+    },
+    {
+        "Account": {
+            "Bills": [
+                {
+                    "Bill": {
+                        "Date": {
+                            "Day": 0,
+                            "Month": 0,
+                            "Year": 0
+                        },
+                        "ID": 0,
+                        "OperationType": 1,
+                        "Time": {
+                            "Hours": 0,
+                            "Minutes": 0,
+                            "Seconds": 0
+                        },
+                        "Value": 6
+                    }
+                }
+            ],
+            "ID": 0,
+            "Name": "Account Name 1",
+            "NumberOfBills": 1,
+            "Value": 0,
+            "Wallet": 68
+        }
+    }
+]

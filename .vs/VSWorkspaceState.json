@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\Wallet",
-    "\\walletLib",
     "\\walletLib\\lib"
   ],
-  "SelectedNode": "\\walletLib\\lib\\EventHandlers.h",
+  "SelectedNode": "\\cpp.Wallet.sln",
   "PreviewInSolutionExplorer": false
 }
