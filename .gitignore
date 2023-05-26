@@ -91,3 +91,8 @@ ipch/
 /Wallet/temp/
 /.vs/
 /bin/
+/Wallet/Accounts.json
+/bin/Wallet/x64/Debug/walletLib.dll
+/bin/Wallet/x64/Debug/Wallet.pdb
+/bin/Wallet/x64/Debug/imgui.ini
+/bin/Wallet/x64/Debug/Accounts.json

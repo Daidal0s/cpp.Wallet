@@ -13,7 +13,6 @@ int main()
 	if (!glfwInit())
 		return 1;
 
-	// GL 3.0 + GLSL 130
 	const char* glsl_version = "#version 130";
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -25,27 +24,33 @@ int main()
 		return 1;
 
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1);										// Enable vsync
+	glfwSwapInterval(1);										// Включить vsync
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;		 // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;			// Подрубаем доки
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;		 // Включить навиггацию по клавиатуре
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;			 // Подрубаем доки
 
 	ImGui::StyleColorsDark();
 
-	// Setup Platform/Renderer backends
+	// Настройка платформы
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init(glsl_version);
 
 	AccountsList _accountList;
 
-	// Our state
-	bool show_createAccount_window = false;
-	bool show_demo_window = true;
-	bool show_accounts = true;
+	static bool show_createAccountWindow = false;
+	static bool show_demo_window = false;
 
+	static bool show_accounts = false;
+	static bool show_billMenu = false;
+	static bool show_billsList = true;
+
+	if (!IO::checkForSave())
+		show_createAccountWindow = true;
+	else
+		IO::loadAccounts(_accountList);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -55,37 +60,49 @@ int main()
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
+		// Включение возможности состыковки
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
-		// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-		if (show_demo_window)
-			ImGui::ShowDemoWindow(&show_demo_window);
-
+		// Верхнее меню окна
 		if (ImGui::BeginMainMenuBar())
 		{
-			if (ImGui::BeginMenu("Accounts"))
+			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("Create Account", NULL, &show_createAccount_window)) {}
-				if (ImGui::MenuItem("Show Accounts"), NULL, &show_accounts) {}
 				if (ImGui::MenuItem("Save Accounts")) { IO::saveAccounts(_accountList); }
+				if (ImGui::MenuItem("Load Accounts")) { IO::loadAccounts(_accountList); }
 				ImGui::EndMenu();
 			}
-
+			if (ImGui::BeginMenu("Accounts"))
+			{
+				if (ImGui::MenuItem("Create Account", NULL, &show_createAccountWindow)) { }
+				if (ImGui::MenuItem("Show Accounts", NULL, &show_accounts)) { }
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Bills"))
+			{
+				if (ImGui::MenuItem("Open Bill Menu", NULL, &show_billMenu)) {}
+				ImGui::EndMenu();
+			}
 			ImGui::EndMainMenuBar();
 		}
 
-		if (show_createAccount_window)
-			ImGui::CreateAccount(_accountList, &show_createAccount_window);
-		/*if (!IO::checkForSave())
-		{
-			ImGui::CreateAccount(_accountList);
-		}*/
+		// Открыть окно создания аккаунтов
+		if (show_createAccountWindow)
+			ImGui::CreateAccount(_accountList, &show_createAccountWindow);
 
+		// Открыть меню счетов
+		if (show_billMenu)
+			ImGui::BillWindow(_accountList, &show_billMenu);
+
+		// Показать аккаунты
 		if (show_accounts)
-			for (int32_t iii = 0; iii < _accountList.getNumberOfAccounts(); ++iii)
-				ImGui::AccountGenerator(_accountList, iii, &show_accounts);
+			ImGui::Accounts(_accountList, &show_accounts);
 
-		// Rendering
+		// Демо-окно
+		if (show_demo_window)
+			ImGui::ShowDemoWindow(&show_demo_window);
+
+		// Рендер
 		ImGui::Render();
 		int display_w, display_h;
 		glfwGetFramebufferSize(window, &display_w, &display_h);
@@ -95,7 +112,7 @@ int main()
 		glfwSwapBuffers(window);
 	}
 
-	// Cleanup
+	// Очистка
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
