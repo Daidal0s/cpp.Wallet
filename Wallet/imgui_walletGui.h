@@ -9,7 +9,7 @@ namespace ImGui
 		const char* operations[] = { "Increase","Decrease" };
 
 		std::vector<std::string> nameOfAccounts;
-		// std::vector<int32_t> billIds;
+		std::vector<int32_t> billIds;
 
 		for (int32_t iii = 0; iii < accountList.getNumberOfAccounts(); ++iii)
 		{
@@ -29,10 +29,29 @@ namespace ImGui
 			ImGui::Begin("Bill Menu", p_open);
 
 			static int accountIdx = 0;
-			// static int prevAccIdx = 0;																// TODO: Удаление аккаунтов
+			static int prevAccIdx = 0;																// TODO: Удаление аккаунтов
 			static int billIdx = 0;
 			const char* previewValue = "NULL";
 			const char* previewBillId = "NULL";
+
+			if (!nameOfAccounts.empty() && !accountList.getAccountList().at(accountIdx)->getBillList().getList().empty())
+			{
+				if (prevAccIdx != accountIdx)
+				{
+					prevAccIdx = accountIdx;
+					/*billIds.erase(billIds.begin());*/
+
+					for (int32_t iii = 0; iii < accountList.getAccountList().at(accountIdx)->getBillList().getNumberOfBills(); ++iii)
+					{
+						billIds.push_back(accountList.getAccountList().at(iii)->getBillList().getList().at(iii)->getCurrentId());
+					}
+
+
+				}
+			}
+
+			if (!billIds.empty())
+				previewBillId = std::to_string(billIds.at(billIdx)).c_str();
 
 			if (!nameOfAccounts.empty())
 				previewValue = nameOfAccounts.at(accountIdx).c_str();
@@ -54,6 +73,21 @@ namespace ImGui
 				ImGui::EndCombo();
 			}
 
+			if (ImGui::BeginCombo("Bill Id to delete", previewBillId))
+			{
+				for (int iii = 0; iii < billIds.size(); ++iii)
+				{
+					const bool isSelected = (billIdx == iii);
+
+					if (ImGui::Selectable(std::to_string(billIds.at(iii)).c_str(), isSelected))
+						billIdx = iii;
+
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+
 			ImGui::InputInt("Value", &value);
 
 			ImGui::Combo("Operation Type", &index, operations, IM_ARRAYSIZE(operations));
@@ -66,7 +100,7 @@ namespace ImGui
 			ImGui::InputInt("Minutes", &mins);
 			ImGui::InputInt("Seconds", &s);
 
-			if (ImGui::Button("Add Bill"))
+			if (ImGui::Button("Add Bill") && !accountList.getAccountList().empty())
 			{
 				Time tempTime;
 				tempTime.setDate(d, mon, y);
@@ -115,7 +149,8 @@ namespace ImGui
 	void Accounts(AccountsList& accList, bool* showAccounts)
 	{
 		// Основное окно
-		ImGui::Begin("Accounts", showAccounts);
+		ImGui::SetNextWindowSize(ImVec2(700, 400));
+		ImGui::Begin("Accounts", showAccounts, ImGuiWindowFlags_NoResize);
 
 		// Цикл считывания данных с каждого аккаунта
 		for (int index = 0; index < accList.getNumberOfAccounts(); ++index)
