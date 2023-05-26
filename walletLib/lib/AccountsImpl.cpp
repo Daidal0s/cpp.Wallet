@@ -37,11 +37,11 @@ public:
 		m_wallet(other.pimpl->m_wallet),
 		m_value(other.pimpl->m_value),
 		m_billList(other.pimpl->m_billList)
-	{ 
+	{
 		m_currentId = ++m_accountId;
 	}
 public:
-	void setName(std::string name) { m_name = name; }
+	void setName(const std::string& name) { m_name = name; }
 	void setId(int32_t id) { m_currentId = id; }
 	void setStaticId(int32_t id) { m_accountId = id; }
 
@@ -81,7 +81,7 @@ Account& Account::operator=(const Account& rhs)
 Account::Account(Account&& other) noexcept = default;
 Account& Account::operator=(Account&& rhs) noexcept = default;
 
-void Account::setName(std::string name) { pimpl->setName(name); }
+void Account::setName(const std::string& name) { pimpl->setName(name); }
 void Account::setStaticId(int32_t id) { pimpl->setStaticId(id); }
 void Account::setId(int32_t id) { pimpl->setId(id); }
 
@@ -99,9 +99,17 @@ class AccountsList::impl
 {
 private:
 	std::vector<std::shared_ptr<Account>> m_accList;
+
+	void setIdxAsIds()
+	{
+		for (int32_t iii = 0; iii < m_accList.size(); ++iii)
+		{
+			m_accList.at(iii)->setId(iii);
+		}
+	}
 public:
 	impl() { }
-	~impl()	{ }
+	~impl() { }
 public:
 	impl(const AccountsList& other) :
 		m_accList(other.pimpl->m_accList)
@@ -116,14 +124,16 @@ public:
 		return m_accList;
 	}
 
-	void addAccount(Account& acc)
+	void addAccount(const Account& acc)
 	{
 		m_accList.push_back(std::make_shared<Account>(acc));
-		m_accList.back()->setId(m_accList.size()-1);
+		m_accList.back()->setId(m_accList.size() - 1);					// TODO: Потенциально выполняет код 2 раза
+		setIdxAsIds();
 	}
 	void removeAccount(int32_t id)
 	{
 		m_accList.erase(m_accList.begin() + id);
+		setIdxAsIds();
 	}
 	void printIds()
 	{
@@ -135,7 +145,7 @@ public:
 	}
 };
 
-AccountsList::AccountsList() : 
+AccountsList::AccountsList() :
 	pimpl(std::make_unique<impl>())
 { }
 AccountsList::~AccountsList() { }
@@ -149,8 +159,8 @@ AccountsList& AccountsList::operator=(const AccountsList& rhs)
 }
 
 std::vector<std::shared_ptr<Account>> AccountsList::getAccountList() { return pimpl.get()->getAccountList(); }
-int32_t AccountsList::getNumberOfAccounts() const {	return pimpl->getNumberOfAccounts(); }
+int32_t AccountsList::getNumberOfAccounts() const { return pimpl->getNumberOfAccounts(); }
 
-void AccountsList::addAccount(Account& acc) { pimpl->addAccount(acc); }
+void AccountsList::addAccount(const Account& acc) { pimpl->addAccount(acc); }
 void AccountsList::removeAccount(int32_t id) { pimpl->removeAccount(id); }
 void AccountsList::printIds() { pimpl->printIds(); }

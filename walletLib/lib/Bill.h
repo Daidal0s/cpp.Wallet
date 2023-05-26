@@ -51,6 +51,20 @@ namespace Bills
 		DECREASE
 	};
 
+	static eOperationType findEOperation(int32_t num)
+	{
+		switch (num)
+		{
+		default:
+			return Bills::eOperationType::DECREASE;
+		case 0:
+			return Bills::eOperationType::INCREASE;
+		case 1:
+			return Bills::eOperationType::DECREASE;
+		}
+	}
+
+
 	class MYDLL_API Bill : public eventSystem::Subject
 	{
 	private:
@@ -69,8 +83,8 @@ namespace Bills
 		void setBillStaticId(int32_t lastId);
 		void setValue(int32_t value);
 		void setOpType(eOperationType type);
-		void setCurrentId(int32_t id);
-		void setOperationTime(Time time);
+		void setId(int32_t id);
+		void setOperationTime(const Time& time);
 
 		int32_t	getValue();
 		eOperationType getOperationType();
@@ -95,7 +109,7 @@ namespace Bills
 		std::vector<std::shared_ptr<Bill>> getList();
 		int32_t getNumberOfBills() const;
 
-		void addBill(Bill& bill);
+		void addBill(const Bill& bill);
 		void removeBill(int32_t id);
 		void printBills();
 	};

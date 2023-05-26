@@ -8,36 +8,6 @@ namespace IO
 
 	const std::string fileName = "Accounts.json";
 
-	eWallet findTypeOfWallet(int32_t num)
-	{
-		char32_t ch = static_cast<char32_t>(num);
-
-		switch (ch)
-		{
-		default:
-			return eWallet::DOLLAR;
-		case 'D':
-			return eWallet::DOLLAR;
-		case 'E':
-			return eWallet::EURO;
-		case 'R':
-			return eWallet::RUBLES;
-		}
-	}
-
-	Bills::eOperationType findTypeOfOperation(int32_t num)
-	{
-		switch (num)
-		{
-		default:
-			return Bills::eOperationType::DECREASE;
-		case 0:
-			return Bills::eOperationType::INCREASE;
-		case 1:
-			return Bills::eOperationType::DECREASE;
-		}
-	}
-
 	static void saveAccounts(AccountsList& acc)
 	{
 		json j;
@@ -127,7 +97,7 @@ namespace IO
 			accId = j[iii+1]["Account"]["ID"];
 			name = j[iii+1]["Account"]["Name"];
 			accValue = j[iii+1]["Account"]["Value"];
-			wallet = findTypeOfWallet(j[iii+1]["Account"]["Wallet"]);
+			wallet = findEWalletFromChar(j[iii+1]["Account"]["Wallet"]);
 
 			Account tempAccount(accId, name, wallet, accValue);
 			int32_t numOfBills = j[iii + 1]["Account"]["NumberOfBills"];
@@ -135,7 +105,7 @@ namespace IO
 			for (int32_t jjj = 0; jjj < numOfBills; ++jjj)
 			{
 				billId = j[iii + 1]["Account"]["Bills"][jjj]["Bill"]["ID"];
-				opType = findTypeOfOperation(j[iii + 1]["Account"]["Bills"][jjj]["Bill"]["OperationType"]);
+				opType = Bills::findEOperation(j[iii + 1]["Account"]["Bills"][jjj]["Bill"]["OperationType"]);
 				billValue = j[iii + 1]["Account"]["Bills"][jjj]["Bill"]["Value"];
 
 				d = j[iii + 1]["Account"]["Bills"][jjj]["Bill"]["Date"]["Day"];

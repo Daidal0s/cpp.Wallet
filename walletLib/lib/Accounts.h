@@ -10,6 +10,55 @@ enum class eWallet : wchar_t
 	RUBLES = 'R'
 };
 
+
+static eWallet findEWalletFromChar(int32_t num)
+{
+	char32_t ch = static_cast<char32_t>(num);
+
+	switch (ch)
+	{
+	default:
+		return eWallet::DOLLAR;
+	case 'D':
+		return eWallet::DOLLAR;
+	case 'E':
+		return eWallet::EURO;
+	case 'R':
+		return eWallet::RUBLES;
+	}
+}
+
+static eWallet findEWallet(int32_t index)
+{
+	switch (index)
+	{
+	default:
+		return eWallet::DOLLAR;
+	case 0:
+		return eWallet::DOLLAR;
+	case 1:
+		return eWallet::EURO;
+	case 2:
+		return eWallet::RUBLES;
+	}
+}
+
+static std::string eWalletToString(eWallet wallet)
+{
+	switch (wallet)
+	{
+	default:
+		return "Dollar";
+	case eWallet::DOLLAR:
+		return "Dollar";
+	case eWallet::EURO:
+		return "Euro";
+	case eWallet::RUBLES:
+		return "Rubles";
+	}
+}
+
+
 class MYDLL_API Account : public eventSystem::Subject
 {
 private:
@@ -26,7 +75,7 @@ public:
 	Account(Account&& other) noexcept;
 	Account& operator=(Account&& rhs) noexcept;
 public:
-	void setName(std::string name);
+	void setName(const std::string& name);
 	void setStaticId(int32_t id);
 	void setId(int32_t id);
 
@@ -57,7 +106,7 @@ public:
 	std::vector<std::shared_ptr<Account>> getAccountList();
 	int32_t getNumberOfAccounts() const;
 
-	void addAccount(Account& acc);
+	void addAccount(const Account& acc);
 	void removeAccount(int32_t id);
 	void printIds();
 };

@@ -40,12 +40,14 @@ public:
 	}
 	std::string stringDate() const
 	{
-		std::string str = std::to_string(m_time.D.count()) + "." + std::to_string(m_time.Mon.count()) + "." + std::to_string(m_time.Y.count());
+		auto checkLength{ [](int i) { return (i / 10) > 0 ? std::to_string(i) : "0" + std::to_string(i); } };
+		std::string str = checkLength(m_time.D.count()) + "." + checkLength(m_time.Mon.count()) + "." + std::to_string(m_time.Y.count());
 		return str;
 	}
 	std::string stringTime() const
 	{
-		std::string str = std::to_string(m_time.H.count()) + ":" + std::to_string(m_time.Min.count()) + ":" + std::to_string(m_time.S.count());
+		auto checkLength{ [](int i) { return (i / 10) > 0 ? std::to_string(i) : "0" + std::to_string(i); }};
+		std::string str = checkLength(m_time.H.count()) + ":" + checkLength(m_time.Min.count()) + ":" + checkLength(m_time.S.count());
 		return str;
 	}
 };
@@ -109,8 +111,8 @@ public:
 	void setBillStaticId(int32_t lastId) { m_billId = lastId; }
 	void setValue(int32_t value) { m_value = value; }
 	void setOpType(eOperationType type) { m_opType = type; }
-	void setCurrentId(int32_t id) { m_currentId = id; }
-	void setOperationTime(Time time) { m_operationTime = time; }
+	void setId(int32_t id) { m_currentId = id; }
+	void setOperationTime(const Time& time) { m_operationTime = time; }
 
 	int32_t	getValue() { return m_value; }
 	eOperationType getOperationType() { return m_opType; }
@@ -142,8 +144,8 @@ Bills::Bill& Bills::Bill::operator=(const Bill& rhs)
 void Bills::Bill::setBillStaticId(int32_t lastId) { pimpl->setBillStaticId(lastId); }
 void Bills::Bill::setValue(int32_t value) { pimpl->setValue(value); }
 void Bills::Bill::setOpType(eOperationType type) { pimpl->setOpType(type); }
-void Bills::Bill::setCurrentId(int32_t id) { pimpl->setCurrentId(id); }
-void Bills::Bill::setOperationTime(Time time) { pimpl->setOperationTime(time); }
+void Bills::Bill::setId(int32_t id) { pimpl->setId(id); }
+void Bills::Bill::setOperationTime(const Time &time) { pimpl->setOperationTime(time); }
 
 int32_t Bills::Bill::getValue() { return pimpl->getValue(); }
 Bills::eOperationType Bills::Bill::getOperationType() { return pimpl->getOperationType(); }
@@ -158,6 +160,14 @@ class Bills::BillList::impl
 {
 private:
 	std::vector<std::shared_ptr<Bill>> m_billList;
+
+	void setIdxAsIds()
+	{
+		for (int32_t iii = 0; iii < m_billList.size(); ++iii)
+		{
+			m_billList.at(iii)->setId(iii);
+		}
+	}
 public:
 	impl() { }
 	~impl() { }
@@ -169,10 +179,10 @@ public:
 	std::vector<std::shared_ptr<Bill>> getList() { return m_billList; }
 	int32_t getNumberOfBills() const { return m_billList.size(); }
 
-	void addBill(Bill& bill)
+	void addBill(const Bill& bill)
 	{
 		m_billList.push_back(std::make_shared<Bill>(bill));
-		m_billList.back()->setCurrentId(m_billList.size() - 1);
+		m_billList.back()->setId(m_billList.size() - 1);
 	}
 	void removeBill(int32_t id)
 	{
@@ -209,6 +219,6 @@ Bills::BillList& Bills::BillList::operator=(const BillList& rhs)
 std::vector<std::shared_ptr<Bills::Bill>> Bills::BillList::getList() { return pimpl->getList(); }
 int32_t Bills::BillList::getNumberOfBills() const { return pimpl->getNumberOfBills(); }
 
-void Bills::BillList::addBill(Bill& bill) { pimpl->addBill(bill); }
+void Bills::BillList::addBill(const Bill& bill) { pimpl->addBill(bill); }
 void Bills::BillList::removeBill(int32_t id) { pimpl->removeBill(id); }
 void Bills::BillList::printBills() { pimpl->printBills(); }
