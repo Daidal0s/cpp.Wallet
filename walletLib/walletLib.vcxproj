@@ -80,11 +80,11 @@
     <IntDir>$(ProjectDir)temp\$(PlatformName)\$(Configuration)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\libs\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <OutDir>..\libs\walletLib\$(PlatformName)\</OutDir>
     <IntDir>$(ProjectDir)temp\$(PlatformName)\$(Configuration)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>..\libs\$(ProjectName)\$(PlatformName)\$(Configuration)\</OutDir>
+    <OutDir>..\libs\walletLib\$(PlatformName)\</OutDir>
     <IntDir>$(ProjectDir)temp\$(PlatformName)\$(Configuration)</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
