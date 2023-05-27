@@ -187,6 +187,7 @@ public:
 	void removeBill(int32_t id)
 	{
 		m_billList.erase(m_billList.begin() + id);
+		setIdxAsIds();
 	}
 	void printBills()
 	{

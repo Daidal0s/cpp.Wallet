@@ -9,7 +9,7 @@ namespace ImGui
 		const char* operations[] = { "Increase","Decrease" };
 
 		std::vector<std::string> nameOfAccounts;
-		std::vector<int32_t> billIds;
+		std::vector<std::string> billIds;
 
 		for (int32_t iii = 0; iii < accountList.getNumberOfAccounts(); ++iii)
 		{
@@ -36,22 +36,15 @@ namespace ImGui
 
 			if (!nameOfAccounts.empty() && !accountList.getAccountList().at(accountIdx)->getBillList().getList().empty())
 			{
-				if (prevAccIdx != accountIdx)
+				for (int32_t iii = 0; iii < accountList.getAccountList().at(accountIdx)->getBillList().getNumberOfBills(); ++iii)
 				{
-					prevAccIdx = accountIdx;
-					/*billIds.erase(billIds.begin());*/
-
-					for (int32_t iii = 0; iii < accountList.getAccountList().at(accountIdx)->getBillList().getNumberOfBills(); ++iii)
-					{
-						billIds.push_back(accountList.getAccountList().at(iii)->getBillList().getList().at(iii)->getCurrentId());
-					}
-
-
+					billIds.push_back(std::to_string(accountList.getAccountList().at(accountIdx)->getBillList().getList().at(iii)->getCurrentId()));
 				}
+				billIds.shrink_to_fit();
 			}
 
 			if (!billIds.empty())
-				previewBillId = std::to_string(billIds.at(billIdx)).c_str();
+				previewBillId = billIds.at(billIdx).c_str();
 
 			if (!nameOfAccounts.empty())
 				previewValue = nameOfAccounts.at(accountIdx).c_str();
@@ -73,20 +66,8 @@ namespace ImGui
 				ImGui::EndCombo();
 			}
 
-			if (ImGui::BeginCombo("Bill Id to delete", previewBillId))
-			{
-				for (int iii = 0; iii < billIds.size(); ++iii)
-				{
-					const bool isSelected = (billIdx == iii);
+			// ImGui::Text("Size: %d, Capacity: %d", billIds.size(), billIds.capacity());
 
-					if (ImGui::Selectable(std::to_string(billIds.at(iii)).c_str(), isSelected))
-						billIdx = iii;
-
-					if (isSelected)
-						ImGui::SetItemDefaultFocus();
-				}
-				ImGui::EndCombo();
-			}
 
 			ImGui::InputInt("Value", &value);
 
@@ -113,7 +94,45 @@ namespace ImGui
 				IO::saveAccounts(accountList);
 			}
 
+			if (ImGui::BeginCombo("##Bill Id to delete", previewBillId))
+			{
+				for (int iii = 0; iii < billIds.size(); ++iii)
+				{
+					const bool isSelected = (billIdx == iii);
+					const char* temp = billIds.at(iii).c_str();
 
+					if (ImGui::Selectable(temp, isSelected))
+						billIdx = iii;
+
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Remove Bill"))
+			{
+				[](AccountsList& acc, int32_t accId, Bills::eOperationType type, int32_t value)
+				{
+					switch (type)
+					{
+					case Bills::eOperationType::INCREASE:
+						acc.getAccountList().at(accId)->reduceValue(value);
+						break;
+					case Bills::eOperationType::DECREASE:
+						acc.getAccountList().at(accId)->addValue(value);
+						break;
+					}
+				}
+					(
+						accountList, accountIdx,
+						accountList.getAccountList().at(accountIdx)->getBillList().getList().at(billIdx)->getOperationType(),
+						accountList.getAccountList().at(accountIdx)->getBillList().getList().at(billIdx)->getValue()
+						);
+				accountList.getAccountList().at(accountIdx)->getBillList().removeBill(billIdx);
+				billIdx = 0;
+				IO::saveAccounts(accountList);
+			}
 
 			ImGui::End();
 		}
@@ -182,6 +201,20 @@ namespace ImGui
 						ImGui::TableSetupColumn("Date");
 						ImGui::TableHeadersRow();
 
+						auto operationTypeToStr
+						{ [](Bills::eOperationType opType)
+							{
+								switch (opType)
+								{
+								case Bills::eOperationType::DECREASE:
+									return "Decrease";
+								case Bills::eOperationType::INCREASE:
+									return "Increase";
+								break;
+								}
+							}
+						};
+
 						for (int row = 0; row < billList.getNumberOfBills(); ++row)
 						{
 							ImGui::TableNextRow();
@@ -194,7 +227,7 @@ namespace ImGui
 									ImGui::Text("%d", billList.getList().at(row)->getCurrentId());
 									break;
 								case 1:
-									ImGui::Text("%d", billList.getList().at(row)->getOperationType());
+									ImGui::Text(operationTypeToStr(billList.getList().at(row)->getOperationType()));
 									break;
 								case 2:
 									ImGui::Text("%d", billList.getList().at(row)->getValue());
